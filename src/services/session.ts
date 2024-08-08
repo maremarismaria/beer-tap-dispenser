@@ -8,7 +8,7 @@ export interface Session {
 
 export const getSession: () => Session = () => {
     const session = sessionStorage.getItem(STORAGE_KEY)
-    return !!session ? JSON.parse(session) : null
+    return !!session ? JSON.parse(session) : null;
 };
 
 export const setSession: (user: User) => void = ({ username }) => {
@@ -17,5 +17,5 @@ export const setSession: (user: User) => void = ({ username }) => {
 };
 
 export const closeSession: () => void = () => {
-    sessionStorage.removeItem(STORAGE_KEY)
+    sessionStorage.removeItem(STORAGE_KEY);
 };
