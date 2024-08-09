@@ -1,8 +1,20 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Dispenser } from "@/types/dispenser";
+import { getAllDispensers } from "@/services/dispensers";
 import styles from "./page.module.css";
 
 export default function BeerDispensersPage() {
+  const [dispensers, setDispensers] = useState<Dispenser[]>([])
+
+  useEffect(()=>{
+    getAllDispensers().then(data => {
+      setDispensers(data);
+    });
+  }, []);
+
   return (
     <>
       <nav>
@@ -22,7 +34,12 @@ export default function BeerDispensersPage() {
           />
           <h1>Beer Dispensers</h1>
         </div>
-        <p>There are no dispensers yet</p>
+        <section>
+          { dispensers.length 
+            ? JSON.stringify(dispensers) 
+            : <p>There are no dispensers yet</p>
+          }
+        </section>
       </main>
     </>
   );
