@@ -1,18 +1,32 @@
 "use client"
 import { useRouter } from "next/navigation";
-import { FormEvent } from "react";
-import { closeSession } from "@/services/session";
+import { FormEvent, useEffect } from "react";
+import { closeSession, getSession } from "@/services/session";
+import { createDispenser } from "@/services/dispensers";
 
 export default function AdminPage() {
   const router = useRouter();
-  
-  const onSubmit = (event: FormEvent) => {
-    event.preventDefault();
-  };
+
+  useEffect(() => {
+      const session = getSession();
+
+      if (!session) {
+          router.push("/");
+      }
+  }, []);
 
   const onClickLogout = () => {
     closeSession();
     router.push("/");
+  };
+  
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+    const flowVolume = formData.get("flow-volume") as string;
+    createDispenser(+flowVolume).then((newDispenser) => {
+      console.log(newDispenser);
+    });
   };
 
   return (
