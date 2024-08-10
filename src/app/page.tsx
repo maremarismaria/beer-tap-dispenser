@@ -1,13 +1,14 @@
 "use client"
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Dispenser } from "@/types/dispenser";
 import { getAllDispensers } from "@/services/dispensers";
+import { Loader } from "./components/Loader";
+import { DispenserList } from "./components/DispenserList/DispenserList";
 import styles from "./page.module.css";
 
 export default function BeerDispensersPage() {
-  const [dispensers, setDispensers] = useState<Dispenser[]>([])
+  const [dispensers, setDispensers] = useState<Dispenser[]>([]);
 
   useEffect(()=>{
     getAllDispensers().then(data => {
@@ -15,31 +16,29 @@ export default function BeerDispensersPage() {
     });
   }, []);
 
+  const onClickDispenserStatus = (dispenser: Dispenser) => () => {
+    console.log(dispenser);
+  }
+
   return (
     <>
-      <nav>
+      <nav className={styles.nav}>
         <ul>
           <li>
             <Link href="/login">Login</Link>
           </li>
         </ul>
       </nav>
-      <main>
-        <div className={styles.header}>
-          <Image
-            src="/beer-32x32.png"
-            alt="Beer Image"
-            width={32}
-            height={32}
-          />
-          <h1>Beer Dispensers</h1>
-        </div>
-        <section>
-          { dispensers.length 
-            ? JSON.stringify(dispensers) 
-            : <p>There are no dispensers yet</p>
-          }
-        </section>
+      <header className={styles.header}>
+        <h1>Beer Dispensers</h1>
+      </header>
+      <main className={styles.main}>
+        { dispensers.length 
+            ? <DispenserList 
+                dispensers={dispensers} 
+                onClickDispenserStatus={onClickDispenserStatus} />
+            : <Loader/>
+        }
       </main>
     </>
   );
