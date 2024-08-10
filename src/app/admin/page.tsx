@@ -6,6 +6,7 @@ import { createDispenser, getAllDispensers } from "@/services/dispensers";
 import { Dispenser } from "@/types/dispenser";
 import { Loader } from "../components/Loader";
 import { DispenserList } from "../components/DispenserList/DispenserList";
+import styles from "./page.module.css";
 
 export default function AdminPage() {
   const router = useRouter();
@@ -45,29 +46,35 @@ export default function AdminPage() {
 
   return (
     <>
-      <nav>
+      <nav className={styles.nav}>
         <ul>
           <li>
             <button onClick={onClickLogout}>Logout</button>
           </li>
         </ul>
       </nav>
-      <h1>Admin Section</h1>
-      <form onSubmit={onSubmit}>
-        <label htmlFor="flow-volume">
-            <span>Flow volume</span>
-            <input type="text" name="flow-volume" id="flow-volume" placeholder="0.63" required/>
-        </label>
-        <button type="submit">Create dispenser</button>
-      </form>
-      <section>
-        { dispensers.length 
-            ? <DispenserList 
-                dispensers={dispensers} 
-                onClickDispenserStatus={onClickDispenserStatus} />
-            : <Loader/>
-        }
-      </section>
+      <header className={styles.header}>
+        <h1>Beer Dispensers</h1>
+      </header>
+      <main>
+        <section>
+          <form className={styles.flowVolumeForm} onSubmit={onSubmit}>
+            <label htmlFor="flow-volume">
+                <span>Flow volume</span>
+                <input type="text" name="flow-volume" id="flow-volume" placeholder="0.63" required/>
+            </label>
+            <button type="submit">Create dispenser</button>
+          </form>
+        </section>
+        <section className={styles.dispensersListSection}>
+          { dispensers.length 
+              ? <DispenserList 
+                  dispensers={dispensers} 
+                  onClickDispenserStatus={onClickDispenserStatus} />
+              : <Loader/>
+          }
+        </section>
+      </main>
     </>
   );
 }
