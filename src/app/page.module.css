@@ -1,4 +1,26 @@
+.nav {
+  background-color: black;
+  padding: 1em;
+  text-align: right;
+}
+
+.nav ul {
+  list-style: none;
+}
+
+.nav ul a {
+  color: white;
+  text-decoration: none;
+}
+
 .header {
+  text-align: center;
+  padding: 1em;
+}
+
+.main {
+  padding: 1em;
   display: flex;
-  gap: 1em;
+  justify-content: center;
+  align-items: center;
 }
