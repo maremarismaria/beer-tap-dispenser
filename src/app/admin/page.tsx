@@ -1,11 +1,11 @@
 "use client"
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { closeSession, getSession } from "@/services/session";
 import { createDispenser, getAllDispensers } from "@/services/dispensers";
-import { Dispenser } from "@/types/dispenser";
+import { Dispenser, DispenserStatus } from "@/types/dispenser";
 import { Loader } from "../components/Loader";
-import { DispenserList } from "../components/DispenserList/DispenserList";
 import styles from "./page.module.css";
 
 export default function AdminPage() {
@@ -36,13 +36,12 @@ export default function AdminPage() {
     const formData = new FormData(event.target as HTMLFormElement);
     const flowVolume = formData.get("flow-volume") as string;
     createDispenser(+flowVolume).then((newDispenser) => {
-      console.log(newDispenser);
+      const dispensersList = structuredClone(dispensers);
+      const updated_at = (new Date()).toISOString();
+      const dispenser = { ...newDispenser, updated_at, status: DispenserStatus.CLOSE };
+      setDispensers([...dispensersList, dispenser]);
     });
   };
-
-  const onClickDispenserStatus = (dispenser: Dispenser) => () => {
-    console.log(dispenser);
-  }
 
   return (
     <>
@@ -68,9 +67,32 @@ export default function AdminPage() {
         </section>
         <section className={styles.dispensersListSection}>
           { dispensers.length 
-              ? <DispenserList 
-                  dispensers={dispensers} 
-                  onClickDispenserStatus={onClickDispenserStatus} />
+              ? <table className={styles.dispensersTable}>
+                  <thead>
+                    <tr>
+                      <th>Dispenser ID</th>
+                      <th>Status</th>
+                      <th>Updated At</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      dispensers.map(({ id, status, updated_at }) => {
+                        return (
+                          <tr key={id}>
+                            <td>{id}</td>
+                            <td>{status}</td>
+                            <td>{updated_at}</td>
+                            <td>
+                              <Link href={`/admin/${id}`}>Detail</Link>
+                            </td>
+                          </tr>
+                        )
+                      })
+                    }
+                  </tbody>
+                </table>
               : <Loader/>
           }
         </section>
