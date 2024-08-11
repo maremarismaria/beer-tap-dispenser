@@ -1,0 +1,16 @@
+.dispensersTable {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 1em;
+}
+  
+.dispensersTable td, 
+.dispensersTable th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 0.5em;
+}
+  
+.dispensersTable tr:nth-child(even) {
+    background-color: #dddddd;
+}

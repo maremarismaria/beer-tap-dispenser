@@ -5,8 +5,9 @@ import { DispenserDetail } from "@/types/dispenser";
 import { useEffect, useState } from "react";
 import { getSession } from "@/services/session";
 import { useRouter } from "next/navigation";
+import { DispenserDetailTable } from "@/app/components/DispenserDetailTable/DispenserDetailTable";
 import styles from "./page.module.css";
- 
+
 export default function Page({ params }: { params: { id: string } }) {
     const router = useRouter();
     const [dispenser, setDispenser] = useState({} as DispenserDetail);
@@ -32,31 +33,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     <p>Amount: {dispenser.amount}</p>
                 </div>
                 <div className={styles.dispenserDetailTableContainer}>
-                    <table className={styles.dispenserDetailTable}>
-                        <caption>Usages</caption>
-                        <thead>
-                            <tr>
-                                <th>Opened At</th>
-                                <th>Closed At</th>
-                                <th>Flow Volume</th>
-                                <th>Total Spent</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                dispenser && dispenser.usages && dispenser.usages.map(({ opened_at, closed_at, flow_volume, total_spent }) => {
-                                    return (
-                                    <tr key={opened_at}>
-                                        <td>{opened_at}</td>
-                                        <td>{closed_at}</td>
-                                        <td>{flow_volume}</td>
-                                        <td>{total_spent}</td>
-                                    </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
+                    <DispenserDetailTable dispenser={dispenser}/>
                 </div>
             </>
         )

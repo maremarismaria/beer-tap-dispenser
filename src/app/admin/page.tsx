@@ -1,11 +1,11 @@
 "use client"
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { closeSession, getSession } from "@/services/session";
 import { createDispenser, getAllDispensers } from "@/services/dispensers";
 import { Dispenser, DispenserStatus } from "@/types/dispenser";
 import { Loader } from "../components/Loader";
+import { DispensersTable } from "../components/DispensersTable/DispensersTable";
 import styles from "./page.module.css";
 
 export default function AdminPage() {
@@ -35,6 +35,7 @@ export default function AdminPage() {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const flowVolume = formData.get("flow-volume") as string;
+
     createDispenser(+flowVolume).then((newDispenser) => {
       const dispensersList = structuredClone(dispensers);
       const updated_at = (new Date()).toISOString();
@@ -67,32 +68,7 @@ export default function AdminPage() {
         </section>
         <section className={styles.dispensersListSection}>
           { dispensers.length 
-              ? <table className={styles.dispensersTable}>
-                  <thead>
-                    <tr>
-                      <th>Dispenser ID</th>
-                      <th>Status</th>
-                      <th>Updated At</th>
-                      <th>Details</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      dispensers.map(({ id, status, updated_at }) => {
-                        return (
-                          <tr key={id}>
-                            <td>{id}</td>
-                            <td>{status}</td>
-                            <td>{updated_at}</td>
-                            <td>
-                              <Link href={`/admin/${id}`}>Detail</Link>
-                            </td>
-                          </tr>
-                        )
-                      })
-                    }
-                  </tbody>
-                </table>
+              ? <DispensersTable dispensers={dispensers} />
               : <Loader/>
           }
         </section>

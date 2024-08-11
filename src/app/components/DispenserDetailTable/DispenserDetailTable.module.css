@@ -1,0 +1,22 @@
+.dispenserDetailTable {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 1em;
+}
+
+.dispenserDetailTable caption {
+    background-color: #dddddd;
+    padding: 0.5em;
+    font-weight: bold;
+}
+
+.dispenserDetailTable td, 
+.dispenserDetailTable th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 0.5em;
+}
+  
+.dispenserDetailTable tr:nth-child(even) {
+    background-color: #dddddd;
+}
