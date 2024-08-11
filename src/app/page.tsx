@@ -1,8 +1,8 @@
 "use client"
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Dispenser } from "@/types/dispenser";
-import { getAllDispensers } from "@/services/dispensers";
+import { Dispenser, DispenserStatus } from "@/types/dispenser";
+import { getAllDispensers, updateDispenser } from "@/services/dispensers";
 import { Loader } from "./components/Loader";
 import { DispenserList } from "./components/DispenserList/DispenserList";
 import styles from "./page.module.css";
@@ -17,8 +17,19 @@ export default function BeerDispensersPage() {
   }, []);
 
   const onClickDispenserStatus = (dispenser: Dispenser) => () => {
-    console.log(dispenser);
-  }
+    const status = DispenserStatus.OPEN === dispenser.status 
+      ? DispenserStatus.CLOSE 
+      : DispenserStatus.OPEN;
+    const updated_at = (new Date()).toISOString();
+    
+    updateDispenser({ id: dispenser.id, status, updated_at })
+      .then(() => {
+        const dispensersList = structuredClone(dispensers);
+        const dispenserPosition = dispensersList.findIndex(({ id }) => id === dispenser.id);
+        dispensersList[dispenserPosition] = { ...dispensersList[dispenserPosition], status };
+        setDispensers(dispensersList);
+      });
+  };
 
   return (
     <>
