@@ -1,0 +1,48 @@
+.header {
+    text-align: center;
+    padding: 1em;
+}
+
+.dispenserDetailSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.dispenserDetailAmountContainer {
+    padding: 1em;
+    text-align: center;
+    width: 100%;
+}
+
+.dispenserDetailTableContainer {
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.dispenserDetailTable {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 1em;
+}
+
+.dispenserDetailTable caption {
+    background-color: #dddddd;
+    padding: 0.5em;
+    font-weight: bold;
+}
+
+.dispenserDetailTable td, 
+.dispenserDetailTable th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 0.5em;
+}
+  
+.dispenserDetailTable tr:nth-child(even) {
+    background-color: #dddddd;
+}
