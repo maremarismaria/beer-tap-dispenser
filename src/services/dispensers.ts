@@ -11,7 +11,7 @@ export const getAllDispensers: () => Promise<Dispenser[]> = () => {
         .then(data => data.json());
 }
 
-export const getDispenserDetail: (id: string) => Promise<DispenserDetail[]> = (id) => {
+export const getDispenserDetail: (id: string) => Promise<DispenserDetail> = (id) => {
     const requestParams = {
         method: "GET",
         headers: { "Content-Type": "application/json" },
