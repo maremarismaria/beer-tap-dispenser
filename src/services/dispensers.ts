@@ -32,7 +32,7 @@ export const createDispenser: (flow_volume: number) => Promise<NewDispenser> = (
         .then(data => data.json());
 }
 
-export const updateDispenser: (dispenser: Dispenser) => Promise<string> = (dispenser) => {
+export const updateDispenser: (dispenser: Dispenser) => Promise<void> = (dispenser) => {
     const { id, status, updated_at } = dispenser;
     const requestParams = {
         method: "PUT",
