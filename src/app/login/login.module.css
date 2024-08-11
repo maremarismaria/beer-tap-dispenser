@@ -1,11 +1,43 @@
+.loginFormContainer {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .loginForm {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 1em;
+    padding: 2em;
+    background-color: whitesmoke;
+    border-radius: 24px;
+    border: 1px solid black;
 }
 
-.error {
+.loginForm label {
+    display: flex;
+    flex-direction: column;
+}
+
+.loginForm input {
+    height: 2em;
+}
+
+.loginForm button {
+    background-color: #3e8e41;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 0.5em;
+    cursor: pointer;
+    width: 100%;
+}
+
+.loginForm .error {
     color: #af1010;
+    font-size: 0.8em;
 }

@@ -39,17 +39,19 @@ export default function LoginPage() {
     };
 
     return (
-        <form className={styles.loginForm} onSubmit={onSubmit}>
-            <label htmlFor="username">
-                <span>Username</span>
-                <input type="text" name="username" id="username" required/>
-            </label>
-            <label htmlFor="password">
-                <span>Password</span>
-                <input type="password" name="password" id="password" required/>
-            </label>
-            <p className={styles.error}>{ error }</p>
-            <button type="submit">Login</button>
-        </form>
+        <main className={styles.loginFormContainer}>
+            <form className={styles.loginForm} onSubmit={onSubmit}>
+                <label htmlFor="username">
+                    <span>Username</span>
+                    <input type="text" name="username" id="username" required/>
+                </label>
+                <label htmlFor="password">
+                    <span>Password</span>
+                    <input type="password" name="password" id="password" required/>
+                </label>
+                { error && <p className={styles.error}>{ error }</p>}
+                <button type="submit">Login</button>
+            </form>
+        </main>
     );
 }
